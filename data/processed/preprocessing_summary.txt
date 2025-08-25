@@ -1,0 +1,32 @@
+
+1. DATA CLEANING
+   - Duplicates removed: 0
+   - Missing values handled: 26
+   - Outliers found: 92
+
+2. CLASS IMBALANCE HANDLING
+   - Merged 'Suspect' with 'Hepatitis' (too few samples)
+   - Applied SMOTE to training set
+   - Final class distribution: Balanced
+
+3. FEATURE ENGINEERING
+   - Medical ratios: AST/ALT, ALB/Globulin, ALP/ALT
+   - Abnormal indicators: 5 binary features
+   - Age groups: 5 categories
+   - Severity score: Composite metric
+
+4. DATA SPLITS
+   - Training:   60% (353 -> 1264 after SMOTE)
+   - Validation: 20% (118 samples)
+   - Test:       20% (118 samples)
+
+5. FEATURE SCALING
+   - Method: StandardScaler
+   - Fitted on: Training set only
+   - Applied to: All sets
+
+6. FINAL DIMENSIONS
+   - Features: 22
+   - Classes: 4 (0: Healthy, 1: Hepatitis, 2: Fibrosis, 3: Cirrhosis)
+
+Data is now ready for model training!
