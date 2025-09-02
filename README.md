@@ -78,30 +78,46 @@ Five classification algorithms were trained and compared:
 ### Training Approach
 - All models trained on SMOTE-balanced training set
 - Hyperparameters kept at defaults for initial comparison
-- Evaluation metrics: Accuracy, Precision, Recall, F1-Score
-- Best model selected based on validation F1-score
+- Primary evaluation metric: **Balanced Accuracy** (average recall across all classes)
+- Secondary metrics: Standard Accuracy, F1-Score, Precision, Recall
+- Best model selected based on balanced accuracy to ensure fair performance across all disease stages
 
 ## Model Performance Results
 
 ### Validation Set Performance
 
-| Model | Training Accuracy | Validation Accuracy | F1-Score | Precision | Recall | Training Time |
-|-------|------------------|-------------------|----------|-----------|---------|---------------|
-| **Random Forest** | 100.0% | **95.8%** | **0.948** | 0.940 | 0.958 | 0.98s |
-| Decision Tree | 100.0% | 94.9% | 0.941 | 0.936 | 0.949 | 0.07s |
-| XGBoost | 100.0% | 94.9% | 0.936 | 0.925 | 0.949 | 0.64s |
-| Logistic Regression | 99.8% | 92.4% | 0.929 | 0.938 | 0.924 | 0.18s |
-| SVM | 99.6% | 92.4% | 0.924 | 0.927 | 0.924 | 0.26s |
+| Model | Training Accuracy | Standard Accuracy | **Balanced Accuracy** | F1-Score | 
+|-------|------------------|-------------------|----------------------|----------|
+| **Random Forest** | 100.0% | 95.8% | **65.0%** | 0.948 |
+| Decision Tree | 100.0% | 94.9% | 64.8% | 0.941 |
+| XGBoost | 100.0% | 94.9% | 60.0% | 0.936 |
+| Logistic Regression | 99.8% | 92.4% | 54.5% | 0.929 |
+| SVM | 99.6% | 92.4% | 54.5% | 0.924 |
+
+### Per-Class Performance (Best Model - Random Forest)
+
+| Disease Stage | Recall (Sensitivity) | Support |
+|--------------|---------------------|---------|
+| Healthy (0) | 100.0% | 105 |
+| Hepatitis (1) | 80.0% | 5 |
+| Fibrosis (2) | 0.0% | 3 |
+| Cirrhosis (3) | 80.0% | 5 |
 
 ### Key Performance Insights
 
-1. **Best Model**: Random Forest achieved the highest validation F1-score of 0.948
-2. **Accuracy**: 95.8% validation accuracy significantly outperforms the baseline
-3. **Baseline Comparison**: 
-   - Baseline (always predict healthy): ~89% accuracy
-   - Random Forest improvement: +6.8% over baseline
-4. **Perfect Training Accuracy**: Tree-based models achieved 100% training accuracy, indicating potential overfitting, though validation scores remain strong
-5. **Speed vs Performance**: Decision Tree offers best speed-accuracy trade-off (0.07s training, 94.9% accuracy)
+1. **Best Model**: Random Forest achieved the highest balanced accuracy of 65.0%
+2. **Balanced vs Standard Accuracy**: 
+   - Standard accuracy (95.8%) is misleading due to class imbalance
+   - Balanced accuracy (65.0%) reveals true model performance across all classes
+   - This metric averages the recall of each class, giving equal weight regardless of class size
+3. **Class-Specific Challenges**:
+   - **Excellent**: Perfect detection of healthy patients (100%)
+   - **Good**: 80% detection rate for Hepatitis and Cirrhosis
+   - **Poor**: Cannot detect Fibrosis cases (0% - only 3 samples in validation)
+4. **Why Balanced Accuracy Matters**:
+   - With 89% healthy patients in test set, a model predicting only "healthy" gets 89% standard accuracy
+   - Balanced accuracy penalizes this behavior, showing true performance (25% for always-healthy prediction)
+   - Our best model's 65% balanced accuracy represents genuine predictive capability
 
 ### Model Strengths
 - **High Recall**: Models correctly identify most diseased patients (crucial for medical screening)
@@ -109,10 +125,16 @@ Five classification algorithms were trained and compared:
 - **Fast Inference**: All models provide real-time predictions
 
 ### Limitations & Considerations
-1. **Class Imbalance**: Test set remains imbalanced (89% healthy), which may affect real-world performance
-2. **Small Dataset**: Only 615 total samples limits model complexity
-3. **Missing Validation**: Models require clinical validation before deployment
-4. **Overfitting Risk**: Perfect training accuracy suggests models memorized training data
+1. **Severe Class Imbalance**: 
+   - Test set: 89% healthy, making standard accuracy misleading
+   - Fibrosis class has only 3 validation samples, resulting in 0% detection
+   - Real-world performance depends on actual disease prevalence
+2. **Small Dataset**: Only 615 total samples limits model complexity and generalization
+3. **Balanced Accuracy Reality Check**: 
+   - 65% balanced accuracy means the model misses 35% of cases when weighted equally
+   - Perfect healthy detection inflates standard accuracy metrics
+4. **Missing Validation**: Models require clinical validation before deployment
+5. **Overfitting Risk**: Perfect training accuracy with lower balanced accuracy suggests overfitting
 
 ## Technical Requirements
 

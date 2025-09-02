@@ -1,0 +1,11 @@
+Best Model: Random Forest
+Validation F1-Score: 0.6500
+Validation Accuracy: 0.9576
+
+All Models Performance:
+                    train_accuracy train_balanced_accuracy val_accuracy val_balanced_accuracy    val_f1 val_precision val_recall training_time
+Random Forest                  1.0                     1.0     0.957627                  0.65   0.94776      0.939547   0.957627      1.042582
+Decision Tree                  1.0                     1.0     0.949153              0.647619   0.94133      0.936441   0.949153      0.072325
+XGBoost                        1.0                     1.0     0.949153                   0.6  0.935579      0.924651   0.949153       0.81629
+Logistic Regression       0.998418                0.998418     0.923729              0.545238   0.92908        0.9375   0.923729      0.166659
+SVM                       0.996044                0.996044     0.923729              0.545238  0.923944      0.926907   0.923729      0.245947

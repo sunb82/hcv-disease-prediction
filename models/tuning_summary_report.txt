@@ -1,0 +1,59 @@
+============================================================
+HYPERPARAMETER TUNING SUMMARY REPORT
+Generated: 2025-09-01 21:30:55
+============================================================
+
+BEST MODEL: Random Forest
+----------------------------------------
+CV Balanced Accuracy: 0.9984
+Test Balanced Accuracy: 0.5833
+Test F1-Score: 0.9359
+
+BEST HYPERPARAMETERS:
+  class_weight: balanced
+  max_depth: 20
+  max_features: sqrt
+  min_samples_leaf: 1
+  min_samples_split: 2
+  n_estimators: 200
+
+============================================================
+ALL MODELS COMPARISON
+============================================================
+           Model  CV_Balanced_Acc  Tuning_Time  Val_Accuracy  Val_Balanced_Acc    Val_F1 param_class_weight  param_max_depth param_max_features  param_min_samples_leaf  param_min_samples_split  param_n_estimators param_criterion  param_colsample_bytree  param_gamma  param_learning_rate  param_reg_alpha  param_reg_lambda  param_subsample
+0  Random Forest         0.998413   215.727242      0.957627          0.650000  0.947760           balanced               20               sqrt                     1.0                      2.0               200.0             NaN                     NaN          NaN                  NaN              NaN               NaN              NaN
+2        XGBoost         0.996032   573.995057      0.966102          0.700000  0.954951                NaN                3                NaN                     NaN                      NaN               100.0             NaN                     0.8          0.0                  0.1              0.0               1.0              1.0
+1  Decision Tree         0.981027     2.044613      0.940678          0.597619  0.936441           balanced               10                NaN                     1.0                      2.0                 NaN         entropy                     NaN          NaN                  NaN              NaN               NaN              NaN
+
+============================================================
+TEST SET PERFORMANCE
+============================================================
+Accuracy: 0.9492
+Balanced Accuracy: 0.5833
+F1-Score: 0.9359
+Precision: 0.9250
+Recall: 0.9492
+
+============================================================
+PER-CLASS TEST PERFORMANCE
+============================================================
+
+Healthy:
+  Recall: 1.000
+  Precision: 0.963
+  Support: 105
+
+Hepatitis:
+  Recall: 0.333
+  Precision: 0.500
+  Support: 6
+
+Fibrosis:
+  Recall: 0.000
+  Precision: nan
+  Support: 2
+
+Cirrhosis:
+  Recall: 1.000
+  Precision: 1.000
+  Support: 5
